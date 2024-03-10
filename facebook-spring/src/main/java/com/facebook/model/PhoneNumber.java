@@ -2,6 +2,7 @@ package com.facebook.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -22,5 +23,8 @@ public class PhoneNumber {
 
     @NotBlank
     private String locale;
+
+    @OneToOne(mappedBy = "phoneNumber")
+    private User user;
 
 }
