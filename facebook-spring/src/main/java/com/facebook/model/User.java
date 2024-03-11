@@ -34,8 +34,7 @@ public class User {
     @Email
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "phone_id", referencedColumnName = "id")
+    @Embedded
     @ValidPhoneNumber
     private PhoneNumber phoneNumber;
 
