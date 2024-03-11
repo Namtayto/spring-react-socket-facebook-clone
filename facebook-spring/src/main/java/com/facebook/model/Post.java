@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private String id;
     private String postContent;
     private LocalDateTime postDate;
 
@@ -23,5 +23,5 @@ public class Post {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    
+
 }
