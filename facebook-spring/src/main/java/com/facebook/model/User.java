@@ -11,6 +11,8 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -54,6 +56,7 @@ public class User {
     @Column(length = 6)
     private Egender gender;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
 }
