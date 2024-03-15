@@ -9,8 +9,17 @@ spring:
 server:
   port: 5454
 
+jwt:
+  secret:
+    key: 'basdba123@@@dbasdsabbasadasdsadadasd_ssaasasadddwww'
+    expirationMs: 3600000
+
 ---
 spring:
+  data:
+    mongodb:
+      database: chat
+      port: 27017
   config:
     activate:
       on-profile: dev
