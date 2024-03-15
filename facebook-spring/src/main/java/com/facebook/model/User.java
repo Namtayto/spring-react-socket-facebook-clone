@@ -1,8 +1,6 @@
 package com.facebook.model;
 
-import com.facebook.annotation.ValidPassword;
-import com.facebook.annotation.ValidPhoneNumber;
-import com.facebook.enums.Egender;
+import com.facebook.enums.EGender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -34,11 +34,11 @@ public class User {
     @Email
     private String email;
 
-    @Embedded
-    @ValidPhoneNumber
-    private PhoneNumber phoneNumber;
+//    @Embedded
+//    @ValidPhoneNumber
+//    private PhoneNumber phoneNumber;
 
-    @ValidPassword
+    //@ValidPassword
     private String password;
 
     private String firstName;
@@ -46,14 +46,15 @@ public class User {
     private String school;
     private String address;
     private String location;
+    private String profilePicture;
 
-    @NotBlank
+//    @NotBlank
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 6)
-    private Egender gender;
+    private EGender gender;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
@@ -63,4 +64,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<PostComment> postComments = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+
 }
