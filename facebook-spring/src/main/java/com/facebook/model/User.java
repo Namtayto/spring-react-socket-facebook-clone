@@ -1,6 +1,7 @@
 package com.facebook.model;
 
 import com.facebook.enums.EGender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,15 +22,22 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Table(name = "users_fb", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
+        @UniqueConstraint(columnNames = "email"),
+                @UniqueConstraint(columnNames = "user_name")
 })
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(unique = true)
     private String id;
 
+    @Column(name = "user_name", unique = true)
     @NotBlank
+    private String username;
+
+    @NotBlank
+    @Column(name = "email", unique = true)
     @Size(max = 50)
     @Email
     private String email;
@@ -39,6 +47,8 @@ public class User {
 //    private PhoneNumber phoneNumber;
 
     //@ValidPassword
+    @NotBlank
+    @JsonIgnore
     private String password;
 
     private String firstName;
@@ -65,11 +75,27 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<PostComment> postComments = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "user_roles",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<Role> roles = new HashSet<>();
 
+    public User(String userId, @NonNull String username, @NonNull String email, @NonNull String password) {
+        this.id = userId;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 
 }
