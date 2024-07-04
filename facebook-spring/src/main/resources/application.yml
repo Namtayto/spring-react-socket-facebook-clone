@@ -9,11 +9,6 @@ spring:
 server:
   port: 5454
 
-jwt:
-  secret:
-    key: 'basdba123@@@dbasdsabbasadasdsadadasd_ssaasasadddwww'
-    expirationMs: 3600000
-
 ---
 spring:
   config:
@@ -33,7 +28,9 @@ rsa:
   private-key: classpath:certs/private-key.pem
   public-key: classpath:certs/public-key.pem
 
-
+email:
+  username: 'xxxx@gmail.com'
+  password: 'xxx'
 ---
 
 #spring:
