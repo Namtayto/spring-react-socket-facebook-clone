@@ -1,11 +1,15 @@
 package com.facebook.auth;
 
+import com.facebook.dto.AuthDTO;
 import com.facebook.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -26,7 +30,7 @@ public class AuthService {
     private final JwtEncoder jwtEncoder;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-
+    private final AuthenticationManager authenticationManager;
 
     public String generateToken(Authentication authentication) {
         Instant now = Instant.now();
@@ -45,6 +49,16 @@ public class AuthService {
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+    }
+
+    public String login(AuthDTO.LoginRequest userLogin) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        log.info("Token requested for user :{}", authentication.getAuthorities());
+
+        return generateToken(authentication);
     }
 
 
