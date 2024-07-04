@@ -1,4 +1,4 @@
-package com.facebook.config.auth;
+package com.facebook.auth;
 
 import com.facebook.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

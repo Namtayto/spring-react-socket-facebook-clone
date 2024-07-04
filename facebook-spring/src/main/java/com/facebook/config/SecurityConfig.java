@@ -1,6 +1,6 @@
 package com.facebook.config;
 
-import com.facebook.config.auth.JpaUserDetailsService;
+import com.facebook.auth.JpaUserDetailsService;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -48,7 +48,6 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(authProvider);
     }
-
 
 
     @Bean

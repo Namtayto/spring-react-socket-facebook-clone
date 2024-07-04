@@ -1,7 +1,6 @@
-package com.facebook.config.auth;
+package com.facebook.auth;
 
 import com.facebook.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +46,6 @@ public class AuthService {
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
-
 
 
 }

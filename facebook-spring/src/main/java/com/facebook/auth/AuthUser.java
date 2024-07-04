@@ -1,4 +1,4 @@
-package com.facebook.config.auth;
+package com.facebook.auth;
 
 import com.facebook.model.User;
 import org.springframework.security.core.GrantedAuthority;

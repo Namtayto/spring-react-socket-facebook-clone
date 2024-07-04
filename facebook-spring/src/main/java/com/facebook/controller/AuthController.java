@@ -1,8 +1,8 @@
 package com.facebook.controller;
 
 
-import com.facebook.config.auth.AuthService;
-import com.facebook.config.auth.AuthUser;
+import com.facebook.auth.AuthService;
+import com.facebook.auth.AuthUser;
 import com.facebook.dto.AuthDTO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
