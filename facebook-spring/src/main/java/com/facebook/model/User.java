@@ -11,9 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -23,7 +21,7 @@ import java.util.Set;
 @Builder
 @Table(name = "users_fb", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email"),
-                @UniqueConstraint(columnNames = "user_name")
+        @UniqueConstraint(columnNames = "user_name")
 })
 public class User {
 
@@ -58,7 +56,7 @@ public class User {
     private String location;
     private String profilePicture;
 
-//    @NotBlank
+    //@NotBlank
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
 
@@ -66,14 +64,18 @@ public class User {
     @Column(length = 6)
     private EGender gender;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostLike> postLikes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostComment> postComments = new ArrayList<>();
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
 
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(name = "user_roles",
@@ -81,21 +83,5 @@ public class User {
 //            inverseJoinColumns = @JoinColumn(name = "role_id"))
 //    private Set<Role> roles = new HashSet<>();
 
-    public User(String userId, @NonNull String username, @NonNull String email, @NonNull String password) {
-        this.id = userId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 
 }
