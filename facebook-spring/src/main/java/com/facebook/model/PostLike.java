@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "posts_likes_fb")
+@Table(name = "posts_likes_ntt")
 public class PostLike {
 
     @Id

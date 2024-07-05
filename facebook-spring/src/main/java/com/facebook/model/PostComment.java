@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "posts_comments_fb")
+@Table(name = "posts_comments_ntt")
 public class PostComment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

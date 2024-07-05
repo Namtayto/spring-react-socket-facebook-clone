@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "posts_photos_fb")
+@Table(name = "posts_photos_ntt")
 public class PostPhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
