@@ -6,4 +6,8 @@ public class AuthDTO {
 
     public record Response(String message, String token) {
     }
+
+    public record RegisterRequest(String firstName, String lastName, String username,
+                                  String email, String password) {
+    }
 }
