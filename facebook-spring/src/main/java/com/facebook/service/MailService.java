@@ -28,7 +28,7 @@ public class MailService {
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = userMail;
         String fromAddress = "testjavamail1406@gmail.com";
-        String senderName = "Facebook clone";
+        String senderName = "NTT Social Media";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
                 + "Please click the link below to verify your registration:<br>"
