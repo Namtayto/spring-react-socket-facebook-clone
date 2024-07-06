@@ -1,5 +1,6 @@
 package com.facebook.model;
 
+import com.facebook.annotation.ValidPassword;
 import com.facebook.enums.EGender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -44,7 +45,7 @@ public class User {
 //    @ValidPhoneNumber
 //    private PhoneNumber phoneNumber;
 
-    //@ValidPassword
+    @ValidPassword
     @NotBlank
     @JsonIgnore
     private String password;
@@ -75,6 +76,8 @@ public class User {
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
+
+    private boolean enabled = false;
 
 
 //    @ManyToMany(fetch = FetchType.EAGER)
