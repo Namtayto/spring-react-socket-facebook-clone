@@ -1,5 +1,8 @@
 package com.facebook.dto;
 
+import com.facebook.annotation.ValidPassword;
+import jakarta.validation.constraints.Email;
+
 public class AuthDTO {
     public record LoginRequest(String username, String password) {
     }
@@ -8,6 +11,6 @@ public class AuthDTO {
     }
 
     public record RegisterRequest(String firstName, String lastName, String username,
-                                  String email, String password) {
+                                  @Email String email, @ValidPassword String password) {
     }
 }
