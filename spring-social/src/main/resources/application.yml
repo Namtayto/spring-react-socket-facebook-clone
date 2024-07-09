@@ -29,8 +29,8 @@ rsa:
   public-key: classpath:certs/public-key.pem
 
 email:
-  username: 'xxxx@gmail.com'
-  password: 'xxx'
+  username: 'testjavamail1406@gmail.com'
+  password: 'fyicrdqylpgptbjz'
 ---
 
 #spring:

@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.facebook</groupId>
-    <artifactId>facebook</artifactId>
+    <artifactId>social</artifactId>
     <version>1.0</version>
     <name>facebook</name>
     <description>I clone a facebook</description>
