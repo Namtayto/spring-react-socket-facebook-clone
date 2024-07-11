@@ -11,6 +11,11 @@ server:
 
 ---
 spring:
+  cassandra:
+    schema-action: create_if_not_exists
+    keyspace-name: spring_cassandra
+    port: 9042
+    contact-points: /127.0.0.1:9042
   config:
     activate:
       on-profile: dev
@@ -29,8 +34,8 @@ rsa:
   public-key: classpath:certs/public-key.pem
 
 email:
-  username: 'testjavamail1406@gmail.com'
-  password: 'fyicrdqylpgptbjz'
+  username: '@gmail.com'
+  password: ''
 ---
 
 #spring:
