@@ -8,8 +8,13 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.engine.jdbc.BlobProxy;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.IOException;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +60,9 @@ public class User {
     private String school;
     private String address;
     private String location;
-    private String profilePicture;
+
+    @Lob
+    private Blob profilePicture;
 
     //@NotBlank
     @DateTimeFormat(pattern = "dd-MM-yyyy")
@@ -65,19 +72,15 @@ public class User {
     @Column(length = 6)
     private EGender gender;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostLike> postLikes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostComment> postComments = new ArrayList<>();
-
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
     private boolean enabled = false;
+
+    public void setImages(String[] files) throws IOException {
+        Resource image = new ClassPathResource(files[0]);
+        this.profilePicture = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
+    }
 
 
 //    @ManyToMany(fetch = FetchType.EAGER)
