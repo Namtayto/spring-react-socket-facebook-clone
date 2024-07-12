@@ -1,4 +1,4 @@
-package com.social.model;
+package com.social.model.post;
 
 import lombok.*;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;

@@ -1,4 +1,4 @@
-package com.social.model;
+package com.social.model.user;
 
 
 import com.social.enums.ERole;

@@ -1,6 +1,6 @@
 package com.social.service;
 
-import com.social.model.User;
+import com.social.model.user.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

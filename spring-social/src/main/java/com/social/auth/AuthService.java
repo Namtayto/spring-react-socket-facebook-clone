@@ -1,7 +1,7 @@
 package com.social.auth;
 
 import com.social.dto.AuthDTO;
-import com.social.model.User;
+import com.social.model.user.User;
 import com.social.repository.UserRepository;
 import com.social.service.MailService;
 import jakarta.mail.MessagingException;

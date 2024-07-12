@@ -1,6 +1,6 @@
 package com.social.auth;
 
-import com.social.model.User;
+import com.social.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,8 +1,8 @@
-package com.social.model;
+package com.social.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.annotation.ValidPassword;
 import com.social.enums.EGender;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,8 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter

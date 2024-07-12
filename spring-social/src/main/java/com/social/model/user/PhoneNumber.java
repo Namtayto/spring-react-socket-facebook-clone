@@ -1,6 +1,7 @@
-package com.social.model;
+package com.social.model.user;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 

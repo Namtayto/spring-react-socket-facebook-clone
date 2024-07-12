@@ -1,8 +1,8 @@
 package com.social.annotation;
 
-import com.social.model.PhoneNumber;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.social.model.user.PhoneNumber;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
