@@ -1,34 +1,47 @@
 package com.social.model;
 
-import jakarta.persistence.*;
+
 import lombok.*;
+import org.springframework.data.cassandra.core.mapping.CassandraType;
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
-@Entity
+@Table
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "posts_ntt")
 public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-    private String postContent;
-    private LocalDateTime postDate;
 
-    @ManyToOne()
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @PrimaryKey
+    private UUID id;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostLike> postLikes = new ArrayList<>();
+    private String title;
+    private String content;
+    private UUID userId; // Reference to User entity in MySQL
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PostPhoto> postPhotos = new ArrayList<>();
+    @Builder.Default
+    private final LocalDateTime publishDate = LocalDateTime.now();
+
+    @CassandraType(type = CassandraType.Name.BLOB)
+    private byte[] image;
+
+    private Set<UUID> likes; // Store user IDs who liked the post
+    private Set<UUID> comments; // Store comment IDs
+
+
+    // Additional methods for adding likes and comments
+    public void addLike(UUID userId) {
+        likes.add(userId);
+    }
+
+    public void addComment(UUID comment) {
+        comments.add(comment);
+    }
 
 }
