@@ -3,6 +3,8 @@ package com.social.model.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.annotation.ValidPassword;
 import com.social.enums.EGender;
+import com.social.model.user.friend.FriendRequest;
+import com.social.model.user.friend.Friendship;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +18,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.IOException;
 import java.sql.Blob;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -74,6 +78,12 @@ public class User {
     private String verificationCode;
 
     private boolean enabled = false;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Friendship> friendships = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FriendRequest> friendRequests = new ArrayList<>();
 
     public void setImages(String[] files) throws IOException {
         Resource image = new ClassPathResource(files[0]);
