@@ -14,7 +14,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "friend_requests_ntt")
+@Table(
+        name = "friend_requests_ntt",
+        indexes = {
+                @Index(name = "idx_friend_request_user_friend", columnList = "user_id, friend_id"),
+                @Index(name = "idx_friend_request_status", columnList = "status")
+        }
+)
+
 @IdClass(FriendRequestId.class)
 public class FriendRequest {
 
@@ -31,5 +38,6 @@ public class FriendRequest {
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
 
-    private LocalDateTime createdAt;
+    @Builder.Default
+    private final LocalDateTime createdAt = LocalDateTime.now();
 }

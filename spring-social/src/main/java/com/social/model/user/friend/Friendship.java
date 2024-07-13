@@ -12,7 +12,13 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @IdClass(FriendshipId.class)
-@Table(name = "friendships_ntt")
+@Table(
+        name = "friendships_ntt",
+        indexes = {
+                @Index(name = "idx_friendship_user_friend", columnList = "user_id, friend_id")
+        }
+)
+
 public class Friendship {
 
     @Id
