@@ -86,7 +86,21 @@ public class AuthService {
 
         userRepository.save(registerUser);
         mailService.sendVerificationEmail(registerUser, registerUser.getEmail());
-        return false;
+        return true;
+    }
+
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setVerificationCode(null);
+        user.setEnabled(true);
+        userRepository.save(user);
+
+        return true;
     }
 
 }
