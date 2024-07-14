@@ -47,4 +47,17 @@ public class ControllerExceptionHandler {
         );
         return new ApiResponse(errors, "VALIDATION_FAILED");
     }
+
+    @ExceptionHandler(RegistrationException.class)
+    public ResponseEntity<ApiResponse> handleRegistrationException(RegistrationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        if (ex.getUsernameError() != null) {
+            errors.put("username", ex.getUsernameError());
+        }
+        if (ex.getEmailError() != null) {
+            errors.put("email", ex.getEmailError());
+        }
+        return ResponseEntity.badRequest().body(new ApiResponse(errors, "REGISTRATION_FAILED"));
+    }
+
 }

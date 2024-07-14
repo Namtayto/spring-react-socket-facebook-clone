@@ -1,6 +1,7 @@
 package com.social.auth;
 
 import com.social.dto.AuthDTO;
+import com.social.exception.RegistrationException;
 import com.social.model.user.User;
 import com.social.repository.UserRepository;
 import com.social.service.MailService;
@@ -11,6 +12,7 @@ import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,13 +65,18 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        log.info("Token requested for user :{}", authentication.getAuthorities());
+        Optional<User> user = userRepository.findByUsername(authentication.getName());
 
+        if (!user.get().isEnabled()) {
+            throw new DisabledException("User account is not verified");
+        }
+
+        log.info("Token requested for user :{}", authentication.getAuthorities());
         return generateToken(authentication);
     }
 
 
-    public boolean signup(@Valid AuthDTO.RegisterRequest userSignup) throws MessagingException, UnsupportedEncodingException {
+    public boolean signup(@Valid AuthDTO.RegisterRequest userSignup) throws MessagingException, UnsupportedEncodingException, RegistrationException {
         User registerUser = User.builder()
                 .firstName(userSignup.firstName()).lastName(userSignup.lastName())
                 .username(userSignup.username()).email(userSignup.email())
@@ -76,12 +84,15 @@ public class AuthService {
                 .verificationCode(RandomString.make(64))
                 .build();
 
-        if (userRepository.findByUsername(registerUser.getUsername()).isPresent()) {
-            return false;
-        }
+        boolean usernameExists = userRepository.findByUsername(userSignup.username()).isPresent();
+        boolean emailExists = userRepository.findByEmail(userSignup.email()).isPresent();
 
-        if (userRepository.findByEmail(registerUser.getEmail()).isPresent()) {
-            return false;
+        if (usernameExists && emailExists) {
+            throw new RegistrationException("Username is already taken", "Email is already registered");
+        } else if (usernameExists) {
+            throw new RegistrationException("Username is already taken", null);
+        } else if (emailExists) {
+            throw new RegistrationException(null, "Email is already registered");
         }
 
         userRepository.save(registerUser);
