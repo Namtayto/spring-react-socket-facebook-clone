@@ -2,7 +2,6 @@ package com.social.model.user.friend;
 
 import com.social.model.user.User;
 import com.social.model.user.friend.utils.FriendRequestId;
-import com.social.model.user.friend.utils.RequestStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,18 +24,18 @@ import java.time.LocalDateTime;
 @IdClass(FriendRequestId.class)
 public class FriendRequest {
 
+    //Sender
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    //Receiver
+
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "friend_id", nullable = false)
     private User friend;
-
-    @Enumerated(EnumType.STRING)
-    private RequestStatus status;
 
     @Builder.Default
     private final LocalDateTime createdAt = LocalDateTime.now();
