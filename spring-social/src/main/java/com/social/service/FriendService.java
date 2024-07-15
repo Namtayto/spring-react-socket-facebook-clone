@@ -159,5 +159,10 @@ public class FriendService {
     public boolean isReceiver(User sender, User receiver) {
         return friendRequestRepository.findByUserAndFriend(receiver, sender).isPresent();
     }
+
+    public boolean isMyFriend(User currentUser, User checkThisUser) {
+        return friendshipRepository.findByUserAndFriend(currentUser, checkThisUser).isPresent();
+
+    }
 }
 
