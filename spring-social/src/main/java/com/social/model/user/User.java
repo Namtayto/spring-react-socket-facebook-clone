@@ -2,7 +2,9 @@ package com.social.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.annotation.ValidPassword;
+import com.social.annotation.ValidPhoneNumber;
 import com.social.enums.EGender;
+import com.social.model.Privacy;
 import com.social.model.user.friend.FriendRequest;
 import com.social.model.user.friend.Friendship;
 import jakarta.persistence.*;
@@ -48,9 +50,9 @@ public class User {
     @Email
     private String email;
 
-//    @Embedded
-//    @ValidPhoneNumber
-//    private PhoneNumber phoneNumber;
+    @Embedded
+    @ValidPhoneNumber
+    private PhoneNumber phoneNumber;
 
     @ValidPassword
     @NotBlank
@@ -59,9 +61,6 @@ public class User {
 
     private String firstName;
     private String lastName;
-    private String school;
-    private String address;
-    private String location;
 
     @Lob
     private Blob profilePicture;
@@ -85,17 +84,18 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequest> friendRequests = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private Privacy dateOfBirthPrivacy;
+
+    @Enumerated(EnumType.STRING)
+    private Privacy emailPrivacy;
+
+    @Enumerated(EnumType.STRING)
+    private Privacy phoneNumberPrivacy;
+
     public void setImages(String[] files) throws IOException {
         Resource image = new ClassPathResource(files[0]);
         this.profilePicture = BlobProxy.generateProxy(image.getInputStream(), image.contentLength());
     }
-
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<Role> roles = new HashSet<>();
-
 
 }
