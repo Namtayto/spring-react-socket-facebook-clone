@@ -3,7 +3,6 @@ package com.social.service;
 import com.social.model.user.User;
 import com.social.model.user.friend.FriendRequest;
 import com.social.model.user.friend.Friendship;
-import com.social.model.user.friend.utils.RequestStatus;
 import com.social.repository.FriendRequestRepository;
 import com.social.repository.FriendshipRepository;
 import com.social.repository.UserRepository;
@@ -45,7 +44,6 @@ public class FriendService {
         FriendRequest friendRequest = FriendRequest.builder()
                 .user(user)
                 .friend(friend)
-                .status(RequestStatus.PENDING)
                 .build();
 
         friendRequestRepository.save(friendRequest);
